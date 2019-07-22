@@ -1,6 +1,6 @@
 package com.learning.spring;
 
-import com.learning.spring.currencies.Currency;
+import com.learning.spring.currencies.model.Currency;
 import com.learning.spring.currencies.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

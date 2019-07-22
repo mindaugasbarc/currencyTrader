@@ -1,4 +1,4 @@
-package com.learning.spring.currencies;
+package com.learning.spring.currencies.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

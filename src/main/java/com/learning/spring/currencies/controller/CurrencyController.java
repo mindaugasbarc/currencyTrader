@@ -1,6 +1,8 @@
-package com.learning.spring.currencies;
+package com.learning.spring.currencies.controller;
 
+import com.learning.spring.currencies.CurrencyRepository;
 import com.learning.spring.currencies.exception.CurrencyNotFoundException;
+import com.learning.spring.currencies.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
