@@ -1,6 +1,6 @@
 package com.learning.spring.currencies.controller;
 
-import com.learning.spring.currencies.CurrencyRepository;
+import com.learning.spring.currencies.repository.CurrencyRepository;
 import com.learning.spring.currencies.exception.CurrencyNotFoundException;
 import com.learning.spring.currencies.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class CurrencyController {
         return currencyRepository.findAll();
     }
 
-    @RequestMapping(path = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/find/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Currency getCurrency(@PathVariable("name") String name) {
         return currencyRepository.findById(name).orElseThrow(CurrencyNotFoundException::new);
     }

@@ -2,7 +2,7 @@ package com.learning.spring.currencies.controller;
 
 import com.learning.spring.currencies.model.Money;
 import com.learning.spring.currencies.request.MoneyExchangeRequest;
-import com.learning.spring.currencies.service.MoneyFacade;
+import com.learning.spring.currencies.service.impl.MoneyFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -5,5 +5,5 @@ import com.learning.spring.currencies.model.Money;
 
 public interface ExchangeService {
 
-    Money exchange(Money money, Currency currency);
+    Money exchange(Money money, Currency to);
 }
