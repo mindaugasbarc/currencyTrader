@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 import java.math.RoundingMode;
 
 @Component
-@Profile("!fees")
-public class ExchangeServiceImpl implements ExchangeService {
-
+@Profile("fees")
+public class HighFeeExchangeStrategy implements ExchangeService {
 
     @Override
     public Money exchange(Money money, Currency to) {
         double ratioBetweenCurrencies = money.getCurrency().getRatio().divide(to.getRatio(), RoundingMode.DOWN).doubleValue();
-        return new Money(to, (double) Math.round(money.getAmount() * ratioBetweenCurrencies *100) / 100);
+        return new Money(to, (double) (Math.round(money.getAmount() * ratioBetweenCurrencies *100) / 100) *0.9);
     }
 }
