@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.learning.spring.user.User;
 import com.learning.spring.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
