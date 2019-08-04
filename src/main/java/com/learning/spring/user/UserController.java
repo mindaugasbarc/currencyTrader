@@ -13,20 +13,17 @@ import java.util.UUID;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserAuthenticationService userAuthenticationService;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthenticationService userAuthenticationService) {
+    public UserController(UserRepository userRepository, UserAuthenticationService userAuthenticationService) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.userAuthenticationService = userAuthenticationService;
     }
 
     @PostMapping("/register")
     String register(
             @RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         return login(user);
