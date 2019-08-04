@@ -1,12 +1,12 @@
 package com.learning.spring.user;
 
+import com.learning.spring.user.service.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -14,16 +14,28 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserAuthenticationService userAuthenticationService;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthenticationService userAuthenticationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userAuthenticationService = userAuthenticationService;
     }
 
-    @RequestMapping(path = "/sign-up", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void signUp(@RequestBody User user) {
+    @PostMapping("/register")
+    String register(
+            @RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
+        return login(user);
+    }
+
+    @PostMapping("/login")
+    String login(@RequestBody User user) {
+        return userAuthenticationService
+                .login(user.getUsername(), user.getPassword())
+                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }
 }
