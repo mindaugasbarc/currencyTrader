@@ -2,13 +2,11 @@ package com.learning.spring.currencies.controller;
 
 import com.learning.spring.currencies.model.Money;
 import com.learning.spring.currencies.request.MoneyExchangeRequest;
+import com.learning.spring.currencies.request.SendMoneyRequest;
 import com.learning.spring.currencies.service.impl.MoneyFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/money")
@@ -25,5 +23,10 @@ public class MoneyController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Money exchange(@RequestBody MoneyExchangeRequest moneyExchangeRequest) {
         return moneyFacade.exchange(moneyExchangeRequest);
+    }
+
+    @PostMapping("/send")
+    public void sendMoney(@RequestBody SendMoneyRequest sendMoneyRequest) {
+        moneyFacade.send(sendMoneyRequest);
     }
 }
