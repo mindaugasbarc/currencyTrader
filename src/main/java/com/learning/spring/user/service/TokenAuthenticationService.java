@@ -1,7 +1,8 @@
 package com.learning.spring.user.service;
 
 import com.google.common.collect.ImmutableMap;
-import com.learning.spring.user.User;
+import com.learning.spring.user.model.User;
+import com.learning.spring.user.model.UserDetailsImpl;
 import com.learning.spring.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,19 +24,19 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     @Override
     public Optional<String> login(final String username, final String password) {
         return Optional.ofNullable(userRepository
-                .findByUsername(username))
-                .filter(user -> user.getPassword().equals(password))
+                .findByUserDetails_Username(username))
+                .filter(user -> user.get().getUserDetails().getPassword().equals(password))
                 .map(user -> tokens.expiring(ImmutableMap.of("username", username)));
     }
 
     @Override
     public User findByToken(final String token) {
         Map<String, String > result = tokens.verify(token);
-        return userRepository.findByUsername(result.get("username"));
+        return userRepository.findByUserDetails_Username(result.get("username")).get();
     }
 
     @Override
-    public void logout(final User user) {
+    public void logout(final UserDetailsImpl user) {
         // Nothing to doy
     }
 }

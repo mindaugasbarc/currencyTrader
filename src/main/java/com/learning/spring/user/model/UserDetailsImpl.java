@@ -1,4 +1,4 @@
-package com.learning.spring.user;
+package com.learning.spring.user.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-public class User implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     @Id
     @GeneratedValue

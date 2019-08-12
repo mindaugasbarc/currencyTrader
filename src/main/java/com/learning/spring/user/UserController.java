@@ -1,12 +1,11 @@
 package com.learning.spring.user;
 
+import com.learning.spring.currencies.model.Balance;
+import com.learning.spring.user.model.User;
+import com.learning.spring.user.model.UserDetailsImpl;
 import com.learning.spring.user.service.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -23,14 +22,14 @@ public class UserController {
 
     @PostMapping("/register")
     String register(
-            @RequestBody User user) {
-        userRepository.save(user);
+            @RequestBody UserDetailsImpl userDetails) {
+        userRepository.save(new User(userDetails, new Balance()));
 
-        return login(user);
+        return login(userDetails);
     }
 
     @PostMapping("/login")
-    String login(@RequestBody User user) {
+    String login(@RequestBody UserDetailsImpl user) {
         return userAuthenticationService
                 .login(user.getUsername(), user.getPassword())
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
