@@ -30,6 +30,14 @@ public class UserDetailsImpl implements UserDetails {
         return username;
     }
 
+    public UserDetailsImpl(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserDetailsImpl() {
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

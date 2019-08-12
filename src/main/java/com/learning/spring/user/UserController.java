@@ -1,11 +1,16 @@
 package com.learning.spring.user;
 
 import com.learning.spring.currencies.model.Balance;
+import com.learning.spring.currencies.model.Money;
 import com.learning.spring.user.model.User;
 import com.learning.spring.user.model.UserDetailsImpl;
 import com.learning.spring.user.service.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 @RestController
 @RequestMapping("/user")
@@ -33,5 +38,12 @@ public class UserController {
         return userAuthenticationService
                 .login(user.getUsername(), user.getPassword())
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+    }
+
+    @GetMapping("/balance")
+    Map<String, Double> getBalance(@RequestHeader("Authorization") String token) {
+        return userAuthenticationService.findByToken(token)
+                .getBalance().getAllMoney().stream()
+                .collect(toMap(entry -> entry.getCurrency().getName(), Money::getAmount));
     }
 }
