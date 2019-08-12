@@ -40,8 +40,11 @@ public class Application implements CommandLineRunner {
         balance.addMoney(new Money(usd, 20));
         balance.addMoney(new Money(eur, 20));
 
-
+        Balance balance2 = new Balance();
+        balance2.addMoney(new Money(usd, 100));
+        balance2.addMoney(new Money(eur, 100));
         userRepository.save(new User(new UserDetailsImpl("minde", "1234"), balance));
+        userRepository.save(new User(new UserDetailsImpl("jonas", "4321"), balance2));
 
 
     }
