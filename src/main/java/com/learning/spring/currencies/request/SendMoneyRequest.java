@@ -1,22 +1,31 @@
 package com.learning.spring.currencies.request;
 
-import com.learning.spring.currencies.model.Money;
+public class SendMoneyRequest {
 
-public final class SendMoneyRequest {
+    private String toUser;
+    private String currencyName;
+    private double amount;
 
-    private final String toUser;
-    private final Money money;
-
-    public SendMoneyRequest(String toUser, Money money) {
-        this.toUser = toUser;
-        this.money = money;
+    public SendMoneyRequest() {
     }
+
+    public SendMoneyRequest(String toUser, String currencyName, double amount) {
+        this.toUser = toUser;
+        this.currencyName = currencyName;
+        this.amount = amount;
+    }
+
+
 
     public String getToUser() {
         return toUser;
     }
 
-    public Money getMoney() {
-        return money;
+    public String getCurrencyName() {
+        return currencyName;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 }

@@ -18,6 +18,14 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     private String password;
 
+    public UserDetailsImpl(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserDetailsImpl() {
+    }
+
     public long getId() {
         return id;
     }

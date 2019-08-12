@@ -26,7 +26,7 @@ public class MoneyController {
     }
 
     @PostMapping("/send")
-    public void sendMoney(@RequestBody SendMoneyRequest sendMoneyRequest) {
-        moneyFacade.send(sendMoneyRequest);
+    public void sendMoney(@RequestBody SendMoneyRequest sendMoneyRequest, @RequestHeader("Authorization") String auth) {
+        moneyFacade.send(sendMoneyRequest, auth);
     }
 }

@@ -1,6 +1,7 @@
 package com.learning.spring.user.service;
 
 import com.google.common.collect.ImmutableMap;
+import com.learning.spring.user.model.User;
 import com.learning.spring.user.model.UserDetailsImpl;
 import com.learning.spring.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     }
 
     @Override
-    public UserDetails findByToken(final String token) {
+    public User findByToken(final String token) {
         Map<String, String > result = tokens.verify(token);
-        return userRepository.findByUserDetails_Username(result.get("username")).get().getUserDetails();
+        return userRepository.findByUserDetails_Username(result.get("username")).get();
     }
 
     @Override

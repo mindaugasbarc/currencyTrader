@@ -2,8 +2,11 @@ package com.learning.spring.currencies.model;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Balance {
@@ -17,6 +20,12 @@ public class Balance {
 
     public Money getMoney(Currency currency) {
         return currencies.containsKey(currency) ?  new Money(currency, currencies.get(currency)) : new Money(currency, 0);
+    }
+
+    public List<Money> getAccountBalance() {
+        return currencies.entrySet().stream()
+                .map(entry -> new Money(entry.getKey(), entry.getValue()))
+                .collect(toList());
     }
 
     public void addMoney(Money money) {

@@ -1,5 +1,6 @@
 package com.learning.spring.user.service;
 
+import com.learning.spring.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -30,6 +31,6 @@ public class TokenProvider extends AbstractUserDetailsAuthenticationProvider {
         final Object token = usernamePasswordAuthenticationToken.getCredentials();
         return Optional.ofNullable(token)
                 .map(String::valueOf)
-                .map(userAuthenticationService::findByToken).get();
+                .map(userAuthenticationService::findByToken).map(User::getUserDetails).get();
     }
 }

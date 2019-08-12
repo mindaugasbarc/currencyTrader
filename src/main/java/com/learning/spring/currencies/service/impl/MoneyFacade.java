@@ -8,5 +8,5 @@ public interface MoneyFacade {
 
     Money exchange(MoneyExchangeRequest moneyExchangeRequest);
 
-    void send(SendMoneyRequest sendMoneyRequest);
+    void send(SendMoneyRequest sendMoneyRequest, String authToken);
 }
