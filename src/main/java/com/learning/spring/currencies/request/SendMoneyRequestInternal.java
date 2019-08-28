@@ -3,7 +3,9 @@ package com.learning.spring.currencies.request;
 import com.learning.spring.currencies.model.Money;
 import com.learning.spring.user.model.User;
 
-public final class SendMoneyRequestInternal {
+import javax.transaction.Transactional;
+
+public class SendMoneyRequestInternal {
 
     private final User userFrom;
     private final User userTo;
@@ -16,15 +18,21 @@ public final class SendMoneyRequestInternal {
         this.money = money;
     }
 
-    public User getUserFrom() {
+    @Transactional
+    public void doTransaction() {
+        getUserFrom().chargeMoney(getMoney());
+        getUserTo().receiveMoney(getMoney());
+    }
+
+    private User getUserFrom() {
         return userFrom;
     }
 
-    public User getUserTo() {
+    private User getUserTo() {
         return userTo;
     }
 
-    public Money getMoney() {
+    private Money getMoney() {
         return money;
     }
 }

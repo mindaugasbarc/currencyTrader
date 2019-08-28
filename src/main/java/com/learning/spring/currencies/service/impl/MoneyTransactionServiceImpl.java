@@ -12,8 +12,8 @@ public class MoneyTransactionServiceImpl implements MoneyTransactionService {
 
     @Override
     @Transactional
-    public void doTransaction(SendMoneyRequestInternal request) {
-        request.getUserFrom().getBalance().chargeMoney(request.getMoney());
-        request.getUserTo().getBalance().addMoney(request.getMoney());
+    public void doTransaction(final SendMoneyRequestInternal request) {
+        request.getUserFrom().chargeMoney(request.getMoney());
+        request.getUserTo().receiveMoney(request.getMoney());
     }
 }

@@ -33,8 +33,6 @@ public class SendMoneyTest {
 
     @Before
     public void setup() {
-        mindeToken = getToken("minde");
-        jonasToken = getToken("jonas");
     }
 
     @Test
@@ -60,11 +58,5 @@ public class SendMoneyTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.AUTHORIZATION, token);
         return httpHeaders;
-    }
-
-    private String getToken(String minde) {
-        return restTemplate
-                .postForEntity(URI + "/user/login",
-                        userRepository.findByUserDetails_Username(minde).get().getUserDetails(), String.class).getBody();
     }
 }

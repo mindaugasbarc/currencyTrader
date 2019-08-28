@@ -1,13 +1,16 @@
 package com.learning.spring.currencies.model;
 
+import com.learning.spring.currencies.exception.CurrencyNotFoundException;
+import com.learning.spring.currencies.exception.InsufficientBalanceException;
+
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import javax.transaction.Transactional;
+import java.math.RoundingMode;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @Entity
 public class Balance {
@@ -20,14 +23,22 @@ public class Balance {
     @MapKeyClass(Currency.class)
     private Map<Currency, Double> currencies = new HashMap<>();
 
-    public List<Money> getAllMoney() {
+    public Set<Money> getAllMoney() {
         return currencies.entrySet().stream()
                 .map(entry -> new Money(entry.getKey(), entry.getValue()))
-                .collect(toList());
+                .collect(toSet());
     }
 
     public Money getMoney(Currency currency) {
         return currencies.containsKey(currency) ? new Money(currency, currencies.get(currency)) : new Money(currency, 0);
+    }
+
+    @Transactional
+    public void exchange(Money money, Currency to) {
+        validateIsEnoughMoneyInBalance(money);
+        double ratioBetweenCurrencies = money.getCurrency().getRatio().divide(to.getRatio(), RoundingMode.DOWN).doubleValue();
+        addMoney(new Money(to, (double) Math.round(money.getAmount() * ratioBetweenCurrencies *100) / 100));
+        chargeMoney(money);
     }
 
     public void addMoney(Money money) {
@@ -64,5 +75,14 @@ public class Balance {
         return "Balance{" +
                 "currencies=" + currencies +
                 '}';
+    }
+
+    private void validateIsEnoughMoneyInBalance(Money money) {
+        Double moneyInBalance = currencies.get(money.getCurrency());
+        if (moneyInBalance == null) {
+            throw new CurrencyNotFoundException();
+        } else if (moneyInBalance < money.getAmount()) {
+            throw new InsufficientBalanceException();
+        }
     }
 }

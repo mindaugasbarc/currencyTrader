@@ -1,8 +1,12 @@
 package com.learning.spring.user.model;
 
 import com.learning.spring.currencies.model.Balance;
+import com.learning.spring.currencies.model.Currency;
+import com.learning.spring.currencies.model.Money;
 
 import javax.persistence.*;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Entity
 public class User {
@@ -11,27 +15,34 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @JoinColumn
-    @OneToOne(cascade = CascadeType.ALL)
-    private UserDetailsImpl userDetails;
+    private String username;
 
     @JoinColumn
     @OneToOne(cascade = CascadeType.ALL)
     private Balance balance;
 
-    public User(UserDetailsImpl userDetails, Balance balance) {
-        this.userDetails = userDetails;
+    public User(String username, Balance balance) {
+        this.username = username;
         this.balance = balance;
     }
 
     public User() {
     }
 
-    public UserDetailsImpl getUserDetails() {
-        return userDetails;
+    public void exchange(Money money, Currency to) {
+        balance.exchange(money, to);
     }
 
-    public Balance getBalance() {
-        return balance;
+    public void chargeMoney(Money money) {
+        balance.chargeMoney(money);
+    }
+
+    public void receiveMoney(Money money) {
+        balance.addMoney(money);
+    }
+
+    public Map<String, Double> getBalance() {
+        return balance.getAllMoney().stream()
+                .collect(Collectors.toMap(entry -> entry.getCurrency().getName(), Money::getAmount));
     }
 }

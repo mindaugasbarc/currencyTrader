@@ -6,7 +6,6 @@ import com.learning.spring.currencies.model.Money;
 import com.learning.spring.currencies.repository.CurrencyRepository;
 import com.learning.spring.user.UserRepository;
 import com.learning.spring.user.model.User;
-import com.learning.spring.user.model.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -43,8 +42,9 @@ public class Application implements CommandLineRunner {
         Balance balance2 = new Balance();
         balance2.addMoney(new Money(usd, 100));
         balance2.addMoney(new Money(eur, 100));
-        userRepository.save(new User(new UserDetailsImpl("minde", "1234"), balance));
-        userRepository.save(new User(new UserDetailsImpl("jonas", "4321"), balance2));
+        userRepository.save(new User(
+                "minde", balance));
+        userRepository.save(new User("jonas", balance2));
 
 
     }
