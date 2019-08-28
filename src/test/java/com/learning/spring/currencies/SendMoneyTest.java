@@ -1,7 +1,7 @@
 package com.learning.spring.currencies;
 
-import com.learning.spring.currencies.request.SendMoneyRequest;
-import com.learning.spring.user.UserRepository;
+import com.learning.spring.currencies.application.request.SendMoneyRequest;
+import com.learning.spring.user.domain.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

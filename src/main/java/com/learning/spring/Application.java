@@ -1,11 +1,11 @@
 package com.learning.spring;
 
-import com.learning.spring.currencies.model.Balance;
-import com.learning.spring.currencies.model.Currency;
-import com.learning.spring.currencies.model.Money;
-import com.learning.spring.currencies.repository.CurrencyRepository;
-import com.learning.spring.user.UserRepository;
-import com.learning.spring.user.model.User;
+import com.learning.spring.currencies.domain.model.Balance;
+import com.learning.spring.currencies.domain.model.Currency;
+import com.learning.spring.currencies.domain.model.Money;
+import com.learning.spring.currencies.domain.repository.CurrencyRepository;
+import com.learning.spring.user.domain.UserRepository;
+import com.learning.spring.user.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
