@@ -1,7 +1,7 @@
-package com.learning.spring.currencies;
+package com.mfinancials.tradingengine.money;
 
-import com.learning.spring.currencies.application.request.SendMoneyRequest;
-import com.learning.spring.user.domain.UserRepository;
+import com.mfinancials.tradingengine.money.application.request.SendMoneyRequest;
+import com.mfinancials.tradingengine.user.domain.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

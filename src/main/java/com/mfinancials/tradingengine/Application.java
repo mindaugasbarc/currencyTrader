@@ -1,11 +1,11 @@
-package com.learning.spring;
+package com.mfinancials.tradingengine;
 
-import com.learning.spring.currencies.domain.model.Balance;
-import com.learning.spring.currencies.domain.model.Currency;
-import com.learning.spring.currencies.domain.model.Money;
-import com.learning.spring.currencies.domain.repository.CurrencyRepository;
-import com.learning.spring.user.domain.UserRepository;
-import com.learning.spring.user.domain.model.User;
+import com.mfinancials.tradingengine.money.domain.model.Balance;
+import com.mfinancials.tradingengine.money.domain.model.Currency;
+import com.mfinancials.tradingengine.money.domain.model.Money;
+import com.mfinancials.tradingengine.money.domain.repository.CurrencyRepository;
+import com.mfinancials.tradingengine.user.domain.UserRepository;
+import com.mfinancials.tradingengine.user.domain.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

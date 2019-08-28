@@ -1,4 +1,4 @@
-package com.learning.spring;
+package com.mfinancials.tradingengine;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
