@@ -1,6 +1,6 @@
 package com.mfinancials.tradingengine.money.domain.model;
 
-public class Money {
+public final class Money {
 
     private final Currency currency;
     private final double amount;

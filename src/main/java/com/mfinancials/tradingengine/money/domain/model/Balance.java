@@ -1,8 +1,11 @@
 package com.mfinancials.tradingengine.money.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.mfinancials.tradingengine.money.domain.exception.CurrencyNotFoundException;
+import com.mfinancials.tradingengine.money.domain.exception.InsufficientBalanceException;
+
+import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +21,17 @@ public class Balance {
     @GeneratedValue
     private long id;
 
+    @ElementCollection
+    @MapKeyClass(Currency.class)
     private Map<Currency, Double> currencies = new HashMap<>();
+
+    @Transactional
+    public void exchange(Money money, Currency to) {
+        valdateIsEnoughMoneyInBalance(money);
+        double ratioBetweenCurrencies = money.getCurrency().getRatio().divide(to.getRatio(), RoundingMode.DOWN).doubleValue();
+        addMoney(new Money(to, (double) Math.round(money.getAmount() * ratioBetweenCurrencies * 100) / 100));
+        chargeMoney(money);
+    }
 
     public Set<Money> getAllMoney() {
         return currencies.entrySet().stream()
@@ -60,5 +73,14 @@ public class Balance {
         return "Balance{" +
                 "currencies=" + currencies +
                 '}';
+    }
+
+    private void valdateIsEnoughMoneyInBalance(Money money) {
+        Double moneyInBalance = currencies.get(money.getCurrency());
+        if (moneyInBalance == null) {
+            throw new CurrencyNotFoundException(money.getCurrency().getName());
+        } else if (moneyInBalance < money.getAmount()) {
+            throw new InsufficientBalanceException();
+        }
     }
 }

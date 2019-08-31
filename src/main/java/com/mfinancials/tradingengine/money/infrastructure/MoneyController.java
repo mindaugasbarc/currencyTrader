@@ -1,12 +1,11 @@
 package com.mfinancials.tradingengine.money.infrastructure;
 
 import com.mfinancials.tradingengine.money.application.MoneyFacade;
+import com.mfinancials.tradingengine.money.application.request.MoneyExchangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,6 +23,12 @@ public class MoneyController {
     @GetMapping("/balance")
     public Map<String, Double> balance(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return moneyFacade.userBalance(token);
+    }
+
+    @PostMapping(path = "/exchange", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void exchange(@RequestBody MoneyExchangeRequest moneyExchangeRequest,
+                         @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        moneyFacade.exchange(moneyExchangeRequest, token);
     }
 
 

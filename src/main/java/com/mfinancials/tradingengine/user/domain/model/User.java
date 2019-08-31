@@ -1,6 +1,7 @@
 package com.mfinancials.tradingengine.user.domain.model;
 
 import com.mfinancials.tradingengine.money.domain.model.Balance;
+import com.mfinancials.tradingengine.money.domain.model.Currency;
 import com.mfinancials.tradingengine.money.domain.model.Money;
 
 import javax.persistence.*;
@@ -51,6 +52,10 @@ public class User {
                 ", username='" + username + '\'' +
                 ", balance=" + balance +
                 '}';
+    }
+
+    public void exchange(Money money, Currency to) {
+        balance.exchange(money, to);
     }
 
     public Map<String, Double> getBalance() {
