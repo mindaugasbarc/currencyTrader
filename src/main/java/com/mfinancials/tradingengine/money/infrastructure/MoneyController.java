@@ -2,6 +2,7 @@ package com.mfinancials.tradingengine.money.infrastructure;
 
 import com.mfinancials.tradingengine.money.application.MoneyFacade;
 import com.mfinancials.tradingengine.money.application.request.MoneyExchangeRequest;
+import com.mfinancials.tradingengine.money.application.request.SendMoneyRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -29,6 +30,11 @@ public class MoneyController {
     public void exchange(@RequestBody MoneyExchangeRequest moneyExchangeRequest,
                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         moneyFacade.exchange(moneyExchangeRequest, token);
+    }
+
+    @PostMapping("/send")
+    public void sendMoney(@RequestBody SendMoneyRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        moneyFacade.send(request, token);
     }
 
 

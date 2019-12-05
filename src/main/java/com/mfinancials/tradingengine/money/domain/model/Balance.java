@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -27,7 +26,7 @@ public class Balance {
 
     @Transactional
     public void exchange(Money money, Currency to) {
-        valdateIsEnoughMoneyInBalance(money);
+        validateIsEnoughMoneyInBalance(money);
         double ratioBetweenCurrencies = money.getCurrency().getRatio().divide(to.getRatio(), RoundingMode.DOWN).doubleValue();
         addMoney(new Money(to, (double) Math.round(money.getAmount() * ratioBetweenCurrencies * 100) / 100));
         chargeMoney(money);
@@ -75,7 +74,7 @@ public class Balance {
                 '}';
     }
 
-    private void valdateIsEnoughMoneyInBalance(Money money) {
+    private void validateIsEnoughMoneyInBalance(Money money) {
         Double moneyInBalance = currencies.get(money.getCurrency());
         if (moneyInBalance == null) {
             throw new CurrencyNotFoundException(money.getCurrency().getName());

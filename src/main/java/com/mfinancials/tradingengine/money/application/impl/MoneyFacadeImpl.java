@@ -2,6 +2,7 @@ package com.mfinancials.tradingengine.money.application.impl;
 
 import com.mfinancials.tradingengine.money.application.MoneyFacade;
 import com.mfinancials.tradingengine.money.application.request.MoneyExchangeRequest;
+import com.mfinancials.tradingengine.money.application.request.SendMoneyRequest;
 import com.mfinancials.tradingengine.money.domain.exception.CurrencyNotFoundException;
 import com.mfinancials.tradingengine.money.domain.exception.UserNotFoundException;
 import com.mfinancials.tradingengine.money.domain.model.Currency;
@@ -42,6 +43,16 @@ public class MoneyFacadeImpl implements MoneyFacade {
     @Override
     public Map<String, Double> userBalance(String token) {
         return findUserByToken(token).getBalance();
+    }
+
+    @Override
+    @Transactional
+    public void send(SendMoneyRequest sendMoneyRequest, String token) {
+        User userFrom = findUserByToken(token);
+        User userTo = userRepository.findByUsername(sendMoneyRequest.getToUser())
+                .orElseThrow(UserNotFoundException::new);
+        Currency currency = findCurrency(sendMoneyRequest.getCurrencyName());
+        userFrom.sendMoney(userTo, new Money(currency, sendMoneyRequest.getAmount()));
     }
 
     private User findUserByToken(String token) {

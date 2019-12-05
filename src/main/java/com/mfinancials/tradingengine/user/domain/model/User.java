@@ -5,6 +5,7 @@ import com.mfinancials.tradingengine.money.domain.model.Currency;
 import com.mfinancials.tradingengine.money.domain.model.Money;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -58,9 +59,19 @@ public class User {
         balance.exchange(money, to);
     }
 
+    public void receiveMoney(Money money) {
+        balance.addMoney(money);
+    }
+
     public Map<String, Double> getBalance() {
         return balance.getAllMoney().stream()
                 .collect(Collectors.toMap(money -> money.getCurrency().getName(), Money::getAmount));
+    }
+
+    @Transactional
+    public void sendMoney(User userTo, Money money) {
+        this.balance.chargeMoney(money);
+        userTo.receiveMoney(money);
     }
 
 }
